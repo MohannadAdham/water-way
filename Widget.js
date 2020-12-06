@@ -53,7 +53,7 @@ _setWidgetSize: function(){
 
 _initLayerChooser: function(){
   var idForChangeEvent = "layerChooserNodeEvent" 
-
+  console.log("_initLayerChooser is called");
   new idWebMapLayers({
     idForChangeEvent: idForChangeEvent,
     layerNode: "layerChooserNode",
@@ -62,8 +62,16 @@ _initLayerChooser: function(){
     imageFolderUrl: this.folderUrl
   }) 
   this.layerName = dijit.byId(idForChangeEvent).value;
+  console.log(this.layerName);
   this.layer = this.map.getLayer(this.layerName);
   this.url = this.layer.url;
+
+  dijit.byId(idForChangeEvent).on("change", lang.hitch(this, function(evt){
+    this.layerName = evt;
+    console.log("inside evenet");
+    this.layer = this.map.getLayer(this.layerName);
+    this.url = this.layer.url;
+  }))
 },
 
 
