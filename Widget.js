@@ -67,15 +67,15 @@ _initLayerChooser: function(){
 },
 
 
-_performQuery: function(){
+_queryDownstream: function(){
     console.log(this.layer);  
     console.log(this.layer.getSelectedFeatures()); 
     selectedFeatures = this.layer.getSelectedFeatures();
     featuresToSelect = [];
     selectedFeatures.forEach(feature => {
       console.log(feature["attributes"]["SUBID"]);
-      console.log(feature["attributes"]["Down_Strea"]);
-      var downStream = feature["attributes"]["Down_Strea"].split(',').slice()
+      console.log(feature["attributes"]["ALLDOWN"]);
+      var downStream = feature["attributes"]["ALLDOWN"].split(',').slice()
       console.log(downStream);
       featuresToSelect = featuresToSelect.concat(downStream);
     });
@@ -99,17 +99,20 @@ _performQuery: function(){
   },
 
 
-_performQuery2: function(){
+_queryUpstream: function(){
   console.log(this.layer);  
   console.log(this.layer.getSelectedFeatures()); 
   selectedFeatures = this.layer.getSelectedFeatures();
   featuresToSelect = [];
   selectedFeatures.forEach(feature => {
-    console.log(feature["attributes"]["SUBID"]);
-    console.log(feature["attributes"]["Main_U"]);
-    var downStream = feature["attributes"]["Main_U"].split(',').slice()
-    console.log(downStream);
-    featuresToSelect = featuresToSelect.concat(downStream);
+    if (feature["attributes"]["MAINUPP"]){
+      console.log(feature["attributes"]["SUBID"]);
+      console.log(feature["attributes"]["MAINUPP"]);
+      var upStream = feature["attributes"]["MAINUPP"].split(',').slice()
+      console.log(upStream);
+      featuresToSelect = featuresToSelect.concat(upStream);
+    }
+
   });
   // remove the zeros from the result
   featuresToSelect = featuresToSelect.filter((el) => {return el > 0})
